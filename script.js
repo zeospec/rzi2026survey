@@ -1,39 +1,82 @@
-// 1. Replace with your Google Apps Script Web App URL
-const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+document.addEventListener('DOMContentLoaded', () => {
+    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL'; // <-- Make sure to update this!
 
-document.getElementById('surveyForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    const form = document.getElementById('surveyForm');
+    const progressBar = document.getElementById('progress-bar');
+    const fieldsets = Array.from(form.querySelectorAll('fieldset'));
+    const loader = document.getElementById('loader');
+    const successMessage = document.getElementById('success-message');
+    const challengesCheckboxes = form.querySelectorAll('input[name="challenges"]');
+    const challengesError = document.getElementById('challenges-error');
 
-    // Validate "top 3 challenges"
-    const challenges = document.querySelectorAll('input[name="challenges"]:checked');
-    if (challenges.length > 3) {
-        alert('Please select up to 3 challenges.');
-        return;
+    const totalSections = fieldsets.length;
+
+    // --- Progress Bar Logic ---
+    function updateProgress() {
+        let currentSection = 0;
+        fieldsets.forEach((fieldset, index) => {
+            const rect = fieldset.getBoundingClientRect();
+            // Check if the section is in the viewport (with a bit of offset)
+            if (rect.top < window.innerHeight && rect.bottom > 100) {
+                currentSection = index + 1;
+            }
+        });
+
+        const progress = (currentSection / totalSections) * 100;
+        progressBar.style.width = `${progress}%`;
     }
 
-    const form = event.target;
-    const formData = new FormData(form);
+    window.addEventListener('scroll', updateProgress);
+    updateProgress(); // Initial call
 
-    // Show a submitting message or spinner
-    const submitButton = form.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.textContent = 'Submitting...';
+    // --- Inline Checkbox Validation Logic ---
+    function validateChallenges() {
+        const checkedCount = form.querySelectorAll('input[name="challenges"]:checked').length;
+        if (checkedCount > 3) {
+            challengesError.classList.remove('hidden');
+            return false;
+        } else {
+            challengesError.classList.add('hidden');
+            return true;
+        }
+    }
 
-    fetch(scriptURL, { method: 'POST', body: formData})
-        .then(response => {
-            if (response.ok) {
-                alert('Thank you for your submission!');
-                form.reset();
-            } else {
-                throw new Error('Network response was not ok.');
-            }
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert('There was an error submitting your response. Please try again.');
-        })
-        .finally(() => {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Submit';
-        });
+    challengesCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', validateChallenges);
+    });
+
+    // --- Form Submission Logic ---
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!validateChallenges()) {
+            // Scroll to the error message to make sure the user sees it
+            challengesError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        loader.classList.remove('hidden');
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                if (response.ok) {
+                    form.classList.add('hidden');
+                    document.getElementById('progress-container').classList.add('hidden');
+                    document.querySelector('.header').classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('There was an error submitting your response. Please try again.');
+            })
+            .finally(() => {
+                loader.classList.add('hidden');
+                submitButton.disabled = false;
+            });
+    });
 });

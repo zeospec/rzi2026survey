@@ -1,79 +1,298 @@
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --light-bg: #f8f9fa;
+    --white: #fff;
+    --dark-text: #212529;
+    --light-text: #6c757d;
+    --border-color: #dee2e6;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
     line-height: 1.6;
     margin: 0;
-    padding: 0;
+    padding: 20px;
 }
 
 .container {
     max-width: 800px;
     margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px 40px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
 }
 
-h1, h2 {
-    color: #00529B;
+.header {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 h1 {
     font-size: 1.8em;
-    margin-bottom: 10px;
-}
-
-h2 {
-    font-size: 1.4em;
-    border-bottom: 2px solid #00529B;
-    padding-bottom: 5px;
-    margin-top: 30px;
+    color: var(--dark-text);
+    font-weight: 600;
 }
 
 p {
+    color: var(--light-text);
+    font-size: 1em;
+}
+
+#progress-container {
+    width: 100%;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    height: 10px;
+}
+
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    transition: width 0.4s ease;
+}
+
+form {
+    position: relative;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+legend {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding-bottom: 10px;
     margin-bottom: 20px;
+    width: 100%;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-label {
+.form-group label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.radio-group, .checkbox-group {
     margin-bottom: 10px;
-}
-
-input[type="radio"], input[type="checkbox"] {
-    margin-right: 10px;
+    font-weight: 600;
 }
 
 select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-button {
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.radio-group, .checkbox-group {
+    position: relative;
+    display: block;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 1em;
+    user-select: none;
+}
+
+.radio-group input, .checkbox-group input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.radio-group label, .checkbox-group label {
+    font-weight: 400;
+}
+
+.radio-group .checkmark, .checkbox-group .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: #eee;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.radio-group .checkmark {
+    border-radius: 50%;
+}
+
+.checkbox-group .checkmark {
+    border-radius: 5px;
+}
+
+.radio-group:hover input ~ .checkmark, .checkbox-group:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.radio-group input:checked ~ .checkmark, .checkbox-group input:checked ~ .checkmark {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio-group input:checked ~ .checkmark:after, .checkbox-group input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.radio-group .checkmark:after {
+    top: 7px;
+    left: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.checkbox-group .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+button[type="submit"] {
     display: block;
     width: 100%;
-    padding: 10px;
-    background-color: #00529B;
-    color: #fff;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: var(--white);
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1.2em;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-button:hover {
-    background-color: #003d73;
+button[type="submit"]:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+}
+
+button[type="submit"]:disabled {
+    background-color: var(--secondary-color);
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.9em;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+#loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#success-message {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.success-icon__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: var(--success-color);
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-icon__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    stroke: var(--success-color);
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
 }

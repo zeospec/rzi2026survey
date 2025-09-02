@@ -4,265 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RZI 2026: Need Assessment Survey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>RZI 2026: Need Assessment Survey for DRRs, DRREs & IPDRRs</h1>
-        <p>To ensure RZI 2026 in Namma Chennai is impactful, relevant, and focused on real-time district-level challenges, we're collecting inputs from Rotaract leaders like you. This quick multiple-choice survey will help us design training modules, panel discussions, and resources that are tailor-made to address your needs.</p>
+        <div class="header">
+            <h1>RZI 2026: Need Assessment Survey for DRRs, DRREs & IPDRRs</h1>
+            <p>To ensure RZI 2026 in Namma Chennai is impactful, relevant, and focused on real-time district-level challenges, we're collecting inputs from Rotaract leaders like you. This quick survey will help us design training modules, panel discussions, and resources that are tailor-made to address your needs.</p>
+        </div>
+
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
 
         <form id="surveyForm">
-            <!-- Section 1: Basic Info -->
-            <h2>Section 1: Basic Info</h2>
-            <div class="form-group">
-                <label>1. Your current role in Rotaract</label>
-                <div class="radio-group">
-                    <input type="radio" id="role_ipdrr" name="role" value="Immediate Past DRR" required>
-                    <label for="role_ipdrr">Immediate Past DRR</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="role_drr" name="role" value="Current DRR">
-                    <label for="role_drr">Current DRR</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="role_drre" name="role" value="DRR Elect">
-                    <label for="role_drre">DRR Elect</label>
-                </div>
+            <div id="loader" class="hidden">
+                <div class="spinner"></div>
             </div>
 
-            <div class="form-group">
-                <label for="district_number">2. Your District Number</label>
-                <select id="district_number" name="district_number" required>
-                    <option value="" disabled selected>Select your district</option>
-                    <option value="3011">3011</option>
-                    <option value="3012">3012</option>
-                    <option value="3020">3020</option>
-                    <!-- Add all other districts here -->
-                </select>
-            </div>
+            <fieldset>
+                <legend>Section 1: Basic Info</legend>
+                <div class="form-group">
+                    <label>1. Your current role in Rotaract</label>
+                    <div class="radio-group"><input type="radio" id="role_ipdrr" name="role" value="Immediate Past DRR" required><label for="role_ipdrr">Immediate Past DRR</label></div>
+                    <div class="radio-group"><input type="radio" id="role_drr" name="role" value="Current DRR"><label for="role_drr">Current DRR</label></div>
+                    <div class="radio-group"><input type="radio" id="role_drre" name="role" value="DRR Elect"><label for="role_drre">DRR Elect</label></div>
+                </div>
+                <div class="form-group">
+                    <label for="district_number">2. Your District Number</label>
+                    <select id="district_number" name="district_number" required>
+                        <option value="" disabled selected>Select your district</option>
+                        <option value="3011">3011</option>
+                        <option value="3012">3012</option>
+                        <option value="3020">3020</option>
+                    </select>
+                </div>
+            </fieldset>
 
-            <!-- Section 2: Challenges Faced -->
-            <h2>Section 2: Challenges Faced</h2>
-            <div class="form-group">
-                <label>3. What were your top 3 challenges in your term? (Choose up to 3)</label>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_reporting" name="challenges" value="Club reporting and documentation">
-                    <label for="challenge_reporting">Club reporting and documentation</label>
+            <fieldset>
+                <legend>Section 2: Challenges Faced</legend>
+                <div class="form-group">
+                    <label>3. What were your top 3 challenges in your term? (Choose up to 3)</label>
+                    <div id="challenges-error" class="error-message hidden">Please select up to 3 challenges.</div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_reporting" name="challenges" value="Club reporting and documentation"><label for="challenge_reporting">Club reporting and documentation</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_retention" name="challenges" value="Membership retention"><label for="challenge_retention">Membership retention</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_branding" name="challenges" value="Public image & branding"><label for="challenge_branding">Public image & branding</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_conflict" name="challenges" value="Conflict within district team or clubs"><label for="challenge_conflict">Conflict within district team or clubs</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_support" name="challenges" value="Lack of support from Rotary leadership"><label for="challenge_support">Lack of support from Rotary leadership</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_execution" name="challenges" value="Project execution or scale"><label for="challenge_execution">Project execution or scale</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_fundraising" name="challenges" value="Fundraising and sponsorship"><label for="challenge_fundraising">Fundraising and sponsorship</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_time" name="challenges" value="Time management and delegation"><label for="challenge_time">Time management and delegation</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="challenge_training" name="challenges" value="Lack of proper training before assuming role"><label for="challenge_training">Lack of proper training before assuming role</label></div>
                 </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_retention" name="challenges" value="Membership retention">
-                    <label for="challenge_retention">Membership retention</label>
+                <div class="form-group">
+                    <label>4. Which area do you feel DRRs are least prepared for at the start of their term?</label>
+                    <div class="radio-group"><input type="radio" id="least_prepared_team" name="least_prepared" value="Team building & delegation" required><label for="least_prepared_team">Team building & delegation</label></div>
+                    <div class="radio-group"><input type="radio" id="least_prepared_budgeting" name="least_prepared" value="Budgeting & finance"><label for="least_prepared_budgeting">Budgeting & finance</label></div>
+                    <div class="radio-group"><input type="radio" id="least_prepared_reporting" name="least_prepared" value="Reporting and compliance"><label for="least_prepared_reporting">Reporting and compliance</label></div>
+                    <div class="radio-group"><input type="radio" id="least_prepared_membership" name="least_prepared" value="Membership & club health tracking"><label for="least_prepared_membership">Membership & club health tracking</label></div>
+                    <div class="radio-group"><input type="radio" id="least_prepared_communication" name="least_prepared" value="Communication with clubs"><label for="least_prepared_communication">Communication with clubs</label></div>
+                    <div class="radio-group"><input type="radio" id="least_prepared_branding" name="least_prepared" value="Branding and outreach"><label for="least_prepared_branding">Branding and outreach</label></div>
                 </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_branding" name="challenges" value="Public image & branding">
-                    <label for="challenge_branding">Public image & branding</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_conflict" name="challenges" value="Conflict within district team or clubs">
-                    <label for="challenge_conflict">Conflict within district team or clubs</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_support" name="challenges" value="Lack of support from Rotary leadership">
-                    <label for="challenge_support">Lack of support from Rotary leadership</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_execution" name="challenges" value="Project execution or scale">
-                    <label for="challenge_execution">Project execution or scale</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_fundraising" name="challenges" value="Fundraising and sponsorship">
-                    <label for="challenge_fundraising">Fundraising and sponsorship</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_time" name="challenges" value="Time management and delegation">
-                    <label for="challenge_time">Time management and delegation</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="challenge_training" name="challenges" value="Lack of proper training before assuming role">
-                    <label for="challenge_training">Lack of proper training before assuming role</label>
-                </div>
-            </div>
+            </fieldset>
 
-            <div class="form-group">
-                <label>4. Which area do you feel DRRs are least prepared for at the start of their term?</label>
-                <div class="radio-group">
-                    <input type="radio" id="least_prepared_team" name="least_prepared" value="Team building & delegation" required>
-                    <label for="least_prepared_team">Team building & delegation</label>
+            <fieldset>
+                <legend>Section 3: Training & Support Needs</legend>
+                <div class="form-group">
+                    <label>5. Which of the following areas need focused training sessions at RZI?</label>
+                    <div class="checkbox-group"><input type="checkbox" id="training_conflict" name="training_needs" value="Conflict resolution & people management"><label for="training_conflict">Conflict resolution & people management</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_team" name="training_needs" value="Building your core team"><label for="training_team">Building your core team</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_projects" name="training_needs" value="How to build & run district-wide projects"><label for="training_projects">How to build & run district-wide projects</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_fundraising" name="training_needs" value="Fundraising & CSR connects"><label for="training_fundraising">Fundraising & CSR connects</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_data" name="training_needs" value="Data handling & reporting"><label for="training_data">Data handling & reporting</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_synergy" name="training_needs" value="Effective Rotary-Rotaract synergy"><label for="training_synergy">Effective Rotary-Rotaract synergy</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_growth" name="training_needs" value="Membership growth & club health"><label for="training_growth">Membership growth & club health</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_branding" name="training_needs" value="Digital branding tools"><label for="training_branding">Digital branding tools</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_planning" name="training_needs" value="Planning GRMs, Conferences, RYLAs"><label for="training_planning">Planning GRMs, Conferences, RYLAs</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="training_handover" name="training_needs" value="How to handover effectively to your DRRE"><label for="training_handover">How to handover effectively to your DRRE</label></div>
                 </div>
-                <div class="radio-group">
-                    <input type="radio" id="least_prepared_budgeting" name="least_prepared" value="Budgeting & finance">
-                    <label for="least_prepared_budgeting">Budgeting & finance</label>
+                <div class="form-group">
+                    <label>6. Preferred session format at RZI</label>
+                    <div class="checkbox-group"><input type="checkbox" id="format_workshops" name="session_format" value="Workshops (interactive, hands-on)"><label for="format_workshops">Workshops (interactive, hands-on)</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="format_panels" name="session_format" value="Panel discussions with leaders"><label for="format_panels">Panel discussions with leaders</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="format_peer" name="session_format" value="Peer-led experience sharing"><label for="format_peer">Peer-led experience sharing</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="format_case_studies" name="session_format" value="Case studies / Success & failure stories"><label for="format_case_studies">Case studies / Success & failure stories</label></div>
+                    <div class="checkbox-group"><input type="checkbox" id="format_breakout" name="session_format" value="Zone/region-wise breakout groups"><label for="format_breakout">Zone/region-wise breakout groups</label></div>
                 </div>
-                <div class="radio-group">
-                    <input type="radio" id="least_prepared_reporting" name="least_prepared" value="Reporting and compliance">
-                    <label for="least_prepared_reporting">Reporting and compliance</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="least_prepared_membership" name="least_prepared" value="Membership & club health tracking">
-                    <label for="least_prepared_membership">Membership & club health tracking</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="least_prepared_communication" name="least_prepared" value="Communication with clubs">
-                    <label for="least_prepared_communication">Communication with clubs</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="least_prepared_branding" name="least_prepared" value="Branding and outreach">
-                    <label for="least_prepared_branding">Branding and outreach</label>
-                </div>
-            </div>
+            </fieldset>
 
-            <!-- Section 3: Training & Support Needs -->
-            <h2>Section 3: Training & Support Needs</h2>
-            <div class="form-group">
-                <label>5. Which of the following areas need focused training sessions at RZI? (Checkboxes)</label>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_conflict" name="training_needs" value="Conflict resolution & people management">
-                    <label for="training_conflict">Conflict resolution & people management</label>
+            <fieldset>
+                <legend>Section 4: RZI Experience Design</legend>
+                <div class="form-group">
+                    <label>7. What kind of learning experience would you value most at RZI?</label>
+                    <div class="radio-group"><input type="radio" id="experience_tools" name="learning_experience" value="Practical tools and templates" required><label for="experience_tools">Practical tools and templates</label></div>
+                    <div class="radio-group"><input type="radio" id="experience_case_studies" name="learning_experience" value="Real case studies from other DRRs"><label for="experience_case_studies">Real case studies from other DRRs</label></div>
+                    <div class="radio-group"><input type="radio" id="experience_interactive" name="learning_experience" value="Interactive & activity-based learning"><label for="experience_interactive">Interactive & activity-based learning</label></div>
+                    <div class="radio-group"><input type="radio" id="experience_speaker" name="learning_experience" value="Speaker-led expert sessions"><label for="experience_speaker">Speaker-led expert sessions</label></div>
+                    <div class="radio-group"><input type="radio" id="experience_networking" name="learning_experience" value="Networking & collaboration time"><label for="experience_networking">Networking & collaboration time</label></div>
                 </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_team" name="training_needs" value="Building your core team">
-                    <label for="training_team">Building your core team</label>
+                <div class="form-group">
+                    <label>8. Would you find value in a ‘Problem Solving Booth’ at RZI where experienced leaders guide on specific issues?</label>
+                    <div class="radio-group"><input type="radio" id="booth_yes" name="problem_solving_booth" value="Yes" required><label for="booth_yes">Yes</label></div>
+                    <div class="radio-group"><input type="radio" id="booth_maybe" name="problem_solving_booth" value="Maybe"><label for="booth_maybe">Maybe</label></div>
+                    <div class="radio-group"><input type="radio" id="booth_no" name="problem_solving_booth" value="Not really"><label for="booth_no">Not really</label></div>
                 </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_projects" name="training_needs" value="How to build & run district-wide projects">
-                    <label for="training_projects">How to build & run district-wide projects</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_fundraising" name="training_needs" value="Fundraising & CSR connects">
-                    <label for="training_fundraising">Fundraising & CSR connects</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_data" name="training_needs" value="Data handling & reporting">
-                    <label for="training_data">Data handling & reporting</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_synergy" name="training_needs" value="Effective Rotary-Rotaract synergy">
-                    <label for="training_synergy">Effective Rotary-Rotaract synergy</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_growth" name="training_needs" value="Membership growth & club health">
-                    <label for="training_growth">Membership growth & club health</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_branding" name="training_needs" value="Digital branding tools">
-                    <label for="training_branding">Digital branding tools</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_planning" name="training_needs" value="Planning GRMs, Conferences, RYLAs">
-                    <label for="training_planning">Planning GRMs, Conferences, RYLAs</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="training_handover" name="training_needs" value="How to handover effectively to your DRRE">
-                    <label for="training_handover">How to handover effectively to your DRRE</label>
-                </div>
-            </div>
+            </fieldset>
 
-            <div class="form-group">
-                <label>6. Preferred session format at RZI (Checkboxes)</label>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="format_workshops" name="session_format" value="Workshops (interactive, hands-on)">
-                    <label for="format_workshops">Workshops (interactive, hands-on)</label>
+            <fieldset>
+                <legend>Section 5: Final Inputs</legend>
+                <div class="form-group">
+                    <label>9. How many previous RZIs have you attended?</label>
+                    <div class="radio-group"><input type="radio" id="attended_first" name="previous_rzis" value="This will be my first" required><label for="attended_first">This will be my first</label></div>
+                    <div class="radio-group"><input type="radio" id="attended_one" name="previous_rzis" value="1"><label for="attended_one">1</label></div>
+                    <div class="radio-group"><input type="radio" id="attended_two" name="previous_rzis" value="2"><label for="attended_two">2</label></div>
+                    <div class="radio-group"><input type="radio" id="attended_three_or_more" name="previous_rzis" value="3 or more"><label for="attended_three_or_more">3 or more</label></div>
                 </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="format_panels" name="session_format" value="Panel discussions with leaders">
-                    <label for="format_panels">Panel discussions with leaders</label>
+                <div class="form-group">
+                    <label>10. Would you be willing to be a panelist/speaker at RZI if invited?</label>
+                    <div class="radio-group"><input type="radio" id="speaker_yes" name="willing_to_speak" value="Yes" required><label for="speaker_yes">Yes</label></div>
+                    <div class="radio-group"><input type="radio" id="speaker_maybe" name="willing_to_speak" value="Maybe"><label for="speaker_maybe">Maybe</label></div>
+                    <div class="radio-group"><input type="radio" id="speaker_no" name="willing_to_speak" value="No"><label for="speaker_no">No</label></div>
                 </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="format_peer" name="session_format" value="Peer-led experience sharing">
-                    <label for="format_peer">Peer-led experience sharing</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="format_case_studies" name="session_format" value="Case studies / Success & failure stories">
-                    <label for="format_case_studies">Case studies / Success & failure stories</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="format_breakout" name="session_format" value="Zone/region-wise breakout groups">
-                    <label for="format_breakout">Zone/region-wise breakout groups</label>
-                </div>
-            </div>
-
-            <!-- Section 4: RZI Experience Design -->
-            <h2>Section 4: RZI Experience Design</h2>
-            <div class="form-group">
-                <label>7. What kind of learning experience would you value most at RZI?</label>
-                <div class="radio-group">
-                    <input type="radio" id="experience_tools" name="learning_experience" value="Practical tools and templates" required>
-                    <label for="experience_tools">Practical tools and templates</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="experience_case_studies" name="learning_experience" value="Real case studies from other DRRs">
-                    <label for="experience_case_studies">Real case studies from other DRRs</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="experience_interactive" name="learning_experience" value="Interactive & activity-based learning">
-                    <label for="experience_interactive">Interactive & activity-based learning</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="experience_speaker" name="learning_experience" value="Speaker-led expert sessions">
-                    <label for="experience_speaker">Speaker-led expert sessions</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="experience_networking" name="learning_experience" value="Networking & collaboration time">
-                    <label for="experience_networking">Networking & collaboration time</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>8. Would you find value in a ‘Problem Solving Booth’ at RZI where experienced leaders guide on specific issues?</label>
-                <div class="radio-group">
-                    <input type="radio" id="booth_yes" name="problem_solving_booth" value="Yes" required>
-                    <label for="booth_yes">Yes</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="booth_maybe" name="problem_solving_booth" value="Maybe">
-                    <label for="booth_maybe">Maybe</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="booth_no" name="problem_solving_booth" value="Not really">
-                    <label for="booth_no">Not really</label>
-                </div>
-            </div>
-
-            <!-- Section 5: Final Inputs -->
-            <h2>Section 5: Final Inputs</h2>
-            <div class="form-group">
-                <label>9. How many previous RZIs have you attended?</label>
-                <div class="radio-group">
-                    <input type="radio" id="attended_first" name="previous_rzis" value="This will be my first" required>
-                    <label for="attended_first">This will be my first</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="attended_one" name="previous_rzis" value="1">
-                    <label for="attended_one">1</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="attended_two" name="previous_rzis" value="2">
-                    <label for="attended_two">2</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="attended_three_or_more" name="previous_rzis" value="3 or more">
-                    <label for="attended_three_or_more">3 or more</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>10. Would you be willing to be a panelist/speaker at RZI if invited?</label>
-                <div class="radio-group">
-                    <input type="radio" id="speaker_yes" name="willing_to_speak" value="Yes" required>
-                    <label for="speaker_yes">Yes</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="speaker_maybe" name="willing_to_speak" value="Maybe">
-                    <label for="speaker_maybe">Maybe</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="speaker_no" name="willing_to_speak" value="No">
-                    <label for="speaker_no">No</label>
-                </div>
-            </div>
+            </fieldset>
 
             <button type="submit">Submit</button>
         </form>
+
+        <div id="success-message" class="hidden">
+            <svg class="success-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="success-icon__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="success-icon__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h2>Thank you for your submission!</h2>
+            <p>Your insights are valuable to us. We appreciate you taking the time to complete the survey.</p>
+        </div>
     </div>
 
     <script src="script.js"></script>
