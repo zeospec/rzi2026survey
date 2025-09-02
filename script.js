@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL'; // <-- Make sure to update this!
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby0beZjcCoCzxCJfRUrVRitqhrFrjGXwnVhnmUMnGxQa1nMfrtNO3bCkKchDpQvKI3g/exec'; // <-- Make sure to update this!
 
     const form = document.getElementById('surveyForm');
     const progressBar = document.getElementById('progress-bar');
