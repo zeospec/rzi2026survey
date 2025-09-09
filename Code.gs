@@ -11,39 +11,47 @@ function doPost(e) {
       sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet(SHEET_NAME);
       sheet.appendRow([
         "Timestamp",
+        "Your Name",
         "Your current role in Rotaract",
         "Your District Number",
         "Top 3 challenges in your term",
         "Area DRRs are least prepared for",
-        "Focused training sessions needed",
+        "Focused learning sessions needed",
         "Preferred session format at RZI",
         "Valued learning experience at RZI",
         "Value in a ‘Problem Solving Booth’",
         "Previous RZIs attended",
-        "Willingness to be a panelist/speaker"
+        "Willingness to be a panelist/speaker",
+        "Additional Feedback"
       ]);
     }
 
     const data = e.parameter;
 
-    // Get all selected challenges and join them
-    const challenges = e.parameters.challenges ? e.parameters.challenges.join(', ') : '';
-    const trainingNeeds = e.parameters.training_needs ? e.parameters.training_needs.join(', ') : '';
-    const sessionFormat = e.parameters.session_format ? e.parameters.session_format.join(', ') : '';
+    // Helpers to read multi-select fields
+    const joinMulti = (arr) => (Array.isArray(arr) ? arr.join(', ') : (arr ? String(arr) : ''));
+
+    // Multi-select fields
+    const challenges = joinMulti(e.parameters.challenges);
+    const trainingNeeds = joinMulti(e.parameters.training_needs);
+    const sessionFormat = joinMulti(e.parameters.session_format);
+    const learningExperience = joinMulti(e.parameters.learning_experience);
 
     // Create a new row with the form data
     const newRow = [
       new Date(),
-      data.role,
-      data.district_number,
+      data.name || '',
+      data.role || '',
+      data.district_number || '',
       challenges,
-      data.least_prepared,
+      data.least_prepared || '',
       trainingNeeds,
       sessionFormat,
-      data.learning_experience,
-      data.problem_solving_booth,
-      data.previous_rzis,
-      data.willing_to_speak
+      learningExperience,
+      data.problem_solving_booth || '',
+      data.previous_rzis || '',
+      data.willing_to_speak || '',
+      data.feedback || ''
     ];
 
     // Append the new row to the sheet
