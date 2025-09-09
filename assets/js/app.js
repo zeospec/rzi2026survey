@@ -15,7 +15,7 @@
       id: 'name',
       title: 'Your Name',
       type: 'text',
-      required: false,
+      required: true,
       placeholder: 'Enter your full name'
     },
     {
@@ -28,7 +28,7 @@
     {
       id: 'district_number',
       title: 'Your District Number',
-      type: 'select',
+      type: 'radio',
       required: true,
       options: ['2981', '2982', '3000', '3011', '3012', '3020', '3030', '3040', '3053', '3055', '3056', '3060', '3070', '3080', '3090', '3100', '3110', '3120', '3131', '3132', '3141', '3142', '3150', '3160', '3170', '3181', '3182', '3191', '3192', '3203', '3204', '3205', '3206', '3211', '3212', '3220', '3231', '3233', '3234', '3240', '3250', '3261', '3262', '3292']
     },
@@ -200,6 +200,30 @@
       );
       navEl.appendChild(item);
     });
+    
+    // Auto-scroll to current question
+    scrollToCurrentQuestion();
+  }
+
+  function scrollToCurrentQuestion() {
+    const currentItem = navEl.querySelector('.question-nav__item--current');
+    if (currentItem) {
+      // For desktop (vertical layout)
+      if (window.innerWidth > 900) {
+        currentItem.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'nearest',
+          inline: 'nearest'
+        });
+      } else {
+        // For mobile (horizontal layout)
+        currentItem.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'nearest',
+          inline: 'center'
+        });
+      }
+    }
   }
 
   function renderQuestion() {
@@ -263,6 +287,8 @@
       });
       optionsWrap.append(reviewList);
     } else if (q.type === 'radio') {
+      // For district number, render compact grid
+      if (q.id === 'district_number') optionsWrap.classList.add('grid');
       q.options.forEach((opt, i) => {
         const id = `${q.id}_${i}`;
         optionsWrap.append(
@@ -315,6 +341,11 @@
     renderQuestion();
     renderNav();
     updateProgress();
+    
+    // Ensure current question is visible after navigation
+    setTimeout(() => {
+      scrollToCurrentQuestion();
+    }, 100);
   }
 
   function next() {
@@ -418,6 +449,13 @@
       updateProgress();
     });
   }
+
+  // Handle window resize for responsive scrolling
+  window.addEventListener('resize', () => {
+    setTimeout(() => {
+      scrollToCurrentQuestion();
+    }, 100);
+  });
 
   // Init
   renderNav();
