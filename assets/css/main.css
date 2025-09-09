@@ -72,6 +72,9 @@ body {
 
 .main { flex: 1; display:flex; flex-direction: column; gap: 24px; }
 
+/* Hidden by default; shown on small screens */
+.question-nav--mobile { display: none; }
+
 .header {
   display:flex; align-items:center; gap: 16px;
   background:#fff; border:1px solid var(--gray-200); border-radius: var(--radius-xl);
@@ -176,13 +179,13 @@ body {
 /* Large mobile and small tablets */
 @media (max-width: 900px) {
   .layout { flex-direction: column; }
-  .sidebar { 
-    width: 100%; 
-    height: auto; 
-    max-height: 120px; 
-    order: 2;
-    border-radius: 12px;
-    padding: 16px;
+  /* Hide desktop sidebar on mobile */
+  .sidebar { display: none; }
+  /* Show mobile nav block between header and question card */
+  .question-nav--mobile { 
+    display: flex; flex-direction: row; gap: 8px; overflow-x: auto; 
+    background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; 
+    padding: 12px 16px; box-shadow: var(--shadow-xl);
   }
   .sidebar__title { 
     display: none; 
@@ -230,7 +233,7 @@ body {
     font-size: 11px;
   }
   .main {
-    order: 1;
+    order: 2;
   }
   .question__logo--rzi { height: 120px; }
   .question__logo--partners { height: 56px; }

@@ -163,6 +163,7 @@
   };
 
   const navEl = document.getElementById('questionNav');
+  const navElMobile = document.getElementById('questionNavMobile');
   const rootEl = document.getElementById('questionRoot');
   const progressFill = document.getElementById('progressFill');
   const btnBack = document.getElementById('btnBack');
@@ -189,8 +190,8 @@
     btnBack.disabled = state.index === 0;
   }
 
-  function renderNav() {
-    navEl.innerHTML = '';
+  function buildNavInto(container) {
+    container.innerHTML = '';
     QUESTIONS.forEach((q, i) => {
       const completed = q.type === 'intro' ? state.index > 0 : (!!state.answers[q.id] && (Array.isArray(state.answers[q.id]) ? state.answers[q.id].length > 0 : true));
       const item = el('a', { href: '#', class: 'question-nav__item ' + (i === state.index ? 'question-nav__item--current ' : '') + (completed ? 'question-nav__item--completed' : ''), 'data-index': i, onclick: (e) => { e.preventDefault(); goTo(i); } },
@@ -198,15 +199,19 @@
         el('div', { class: 'question-nav__text' }, q.title),
         el('span', { class: 'question-nav__status' }, completed ? 'Done' : 'Pending')
       );
-      navEl.appendChild(item);
+      container.appendChild(item);
     });
-    
-    // Auto-scroll to current question
+  }
+
+  function renderNav() {
+    if (navEl) buildNavInto(navEl);
+    if (navElMobile) buildNavInto(navElMobile);
     scrollToCurrentQuestion();
   }
 
   function scrollToCurrentQuestion() {
-    const currentItem = navEl.querySelector('.question-nav__item--current');
+    const container = (window.innerWidth > 900 ? navEl : (navElMobile || navEl));
+    const currentItem = container ? container.querySelector('.question-nav__item--current') : null;
     if (currentItem) {
       // For desktop (vertical layout)
       if (window.innerWidth > 900) {
