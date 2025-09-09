@@ -206,7 +206,7 @@
   function renderNav() {
     if (navEl) buildNavInto(navEl);
     if (navElMobile) buildNavInto(navElMobile);
-    scrollToCurrentQuestion();
+    // Don't auto-scroll during option selection, only during navigation
   }
 
   function scrollToCurrentQuestion() {
@@ -347,7 +347,7 @@
     renderNav();
     updateProgress();
     
-    // Ensure current question is visible after navigation
+    // Only scroll to current question when actually navigating between questions
     setTimeout(() => {
       scrollToCurrentQuestion();
     }, 100);
