@@ -53,8 +53,9 @@
     {
       id: 'least_prepared',
       title: 'Which area do you feel DRRs are least prepared for at the start of their term?',
-      type: 'radio',
+      type: 'checkbox',
       required: true,
+      max: 3,
       options: [
         'Team building & delegation',
         'Budgeting & finance',
@@ -69,6 +70,7 @@
       title: 'Which of the following areas need focused learning sessions at RZI?',
       type: 'checkbox',
       required: true,
+      max: 3,
       options: [
         'Conflict resolution & people management',
         'Building your core team',
@@ -87,6 +89,7 @@
       title: 'Preferred session format at RZI',
       type: 'checkbox',
       required: true,
+      max: 3,
       options: [
         'Workshops (interactive, hands-on)',
         'Panel discussions with leaders',
@@ -100,6 +103,7 @@
       title: 'What kind of learning experience would you value most at RZI?',
       type: 'checkbox',
       required: true,
+      max: 3,
       options: [
         'Practical tools and templates',
         'Real case studies from other DRRs',
@@ -111,8 +115,9 @@
     {
       id: 'problem_solving_booth',
       title: 'Would you find value in a \'Problem Solving Booth\' at RZI where experienced leaders guide on specific issues?',
-      type: 'radio',
+      type: 'checkbox',
       required: true,
+      max: 3,
       options: ['Yes, this would be highly valuable', 'Yes, but only for specific, complex issues', 'Maybe, depending on who is at the booth', 'No, I\'d prefer to network with peers']
     },
     {
