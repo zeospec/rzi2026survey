@@ -413,6 +413,9 @@
       await fetch(CONFIG.scriptURL, { method: 'POST', body: formData });
       
       loadingOverlay.classList.add('hidden');
+      // Reset button state
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
       showSuccess();
     } catch (error) {
       console.error('Submission error:', error);
@@ -448,6 +451,13 @@
       
       // Clear storage
       localStorage.removeItem('rzi_survey_answers');
+      
+      // Reset submit button state
+      const submitBtn = document.getElementById('btnSubmit');
+      if (submitBtn) {
+        submitBtn.textContent = 'Submit';
+        submitBtn.disabled = false;
+      }
       
       // Re-render everything
       renderNav();

@@ -153,7 +153,214 @@ body {
 .btn--secondary:hover { background: var(--gray-100); }
 .btn--primary { background: var(--color-primary); color:#fff; border-color: var(--color-primary); }
 .btn--primary:hover { background: var(--color-primary-hover); transform: translateY(-1px); }
-.btn--success { background: var(--color-success); color:#fff; border-color: var(--color-success); }
+.btn--success { 
+  background: linear-gradient(135deg, var(--color-success) 0%, #00a085 100%); 
+  color: #fff; 
+  border-color: var(--color-success); 
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn--success::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn--success:hover {
+  background: linear-gradient(135deg, #00a085 0%, var(--color-success) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+.btn--success:hover::before {
+  left: 100%;
+}
+
+.btn--success:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Submit button entrance animation */
+.btn--success {
+  animation: submitButtonEntrance 0.6s ease-out;
+}
+
+@keyframes submitButtonEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-5px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Pulse animation for submit button */
+.btn--success {
+  animation: submitButtonEntrance 0.6s ease-out, submitButtonPulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes submitButtonPulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5);
+  }
+}
+
+/* Submit button loading state */
+.btn--success:disabled {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  border-color: #6b7280;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+  animation: none;
+  position: relative;
+}
+
+.btn--success:disabled::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: submitButtonSpinner 1s linear infinite;
+}
+
+@keyframes submitButtonSpinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Muted button for secondary actions */
+.btn--muted {
+  background: var(--gray-100);
+  color: var(--gray-600);
+  border-color: var(--gray-300);
+  font-weight: 500;
+  opacity: 0.8;
+  transition: all var(--t-fast);
+}
+
+.btn--muted:hover {
+  background: var(--gray-200);
+  color: var(--gray-700);
+  border-color: var(--gray-400);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Call-to-Action button for primary actions */
+.btn--cta,
+a.btn--cta {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%) !important;
+  color: #fff !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 6px 20px rgba(30, 64, 175, 0.3);
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--t-normal);
+}
+
+.btn--cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn--cta:hover,
+a.btn--cta:hover {
+  background: linear-gradient(135deg, #0a3a5c 0%, #2a6fa5 100%) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.4);
+  color: #fff !important;
+  text-decoration: none !important;
+  border-color: #0a3a5c !important;
+}
+
+.btn--cta:hover::before {
+  left: 100%;
+}
+
+.btn--cta:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(30, 64, 175, 0.3);
+}
+
+/* CTA button entrance animation */
+.btn--cta {
+  animation: ctaButtonEntrance 0.8s ease-out 0.3s both;
+}
+
+@keyframes ctaButtonEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-8px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* CTA button pulse animation */
+.btn--cta {
+  animation: ctaButtonEntrance 0.8s ease-out 0.3s both, ctaButtonPulse 3s ease-in-out infinite 1.5s;
+}
+
+@keyframes ctaButtonPulse {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(30, 64, 175, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(30, 64, 175, 0.5);
+  }
+}
 
 .hidden { display:none !important; }
 
@@ -174,7 +381,23 @@ body {
 @keyframes drawCheck { to { stroke-dashoffset: 0; } }
 .success-title { font-size: 24px; font-weight: 700; color: var(--gray-800); margin: 0; }
 .success-message { color: var(--gray-600); margin: 0; line-height: 1.5; }
-.success-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.success-actions { 
+  display: flex; 
+  gap: 16px; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  align-items: center;
+}
+
+.success-actions .btn--muted {
+  order: 2;
+  flex: 0 0 auto;
+}
+
+.success-actions .btn--cta {
+  order: 1;
+  flex: 0 0 auto;
+}
 
 .loading-overlay { position: fixed; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; background: rgb(255 255 255 / .9); z-index: 60; }
 .loading-spinner { width:40px; height:40px; border:4px solid var(--gray-200); border-top:4px solid var(--color-primary); border-radius:50%; animation: spin 1s linear infinite; }
