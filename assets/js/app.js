@@ -34,7 +34,7 @@
     },
     {
       id: 'challenges',
-      title: 'Top challenges in your term (choose up to 3)',
+      title: 'What were your top 3 challenges in your term?',
       type: 'checkbox',
       max: 3,
       options: [
@@ -51,7 +51,7 @@
     },
     {
       id: 'least_prepared',
-      title: 'Area DRRs are least prepared for at the start of term',
+      title: 'Which area do you feel DRRs are least prepared for at the start of their term?',
       type: 'radio',
       required: true,
       options: [

@@ -66,7 +66,7 @@ We eagerly anticipate your contributions to RZI 2026\.
    * 3292  
    * Other (please specify) (Give Option to Input)
 
-### **Section 2: Challenges Faced**
+### **Section 2: Challenges Faced** 
 
 3. **What were your top 3 challenges in your term? (Check all that apply, up to 3\)**  
    * Club reporting and documentation  
