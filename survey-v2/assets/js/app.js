@@ -201,7 +201,7 @@
       });
     } else if (q.type === 'select') {
       const select = el('select', { class: 'text-input', id: q.id, onchange: () => { state.answers[q.id] = select.value; saveToStorage(); updateProgress(); renderNav(); } });
-      select.append(el('option', { value: '' }, 'Select...'));
+      select.append(el('option', { value: '', disabled: true, selected: !current }, 'Select your district'));
       q.options.forEach(v => select.append(el('option', { value: v, selected: current === v }, v)));
       optionsWrap.append(select);
     } else if (q.type === 'checkbox') {
