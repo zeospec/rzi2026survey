@@ -2,6 +2,12 @@
 (function() {
   const QUESTIONS = [
     {
+      id: 'intro',
+      title: 'Overview',
+      type: 'intro',
+      description: 'To ensure RZI 2026 in Namma Chennai is impactful, relevant, and focused on real-time district-level challenges, we\'re collecting inputs from Rotaract leaders like you. This quick survey will help design training, panels, and resources tailored to your needs.'
+    },
+    {
       id: 'role',
       title: 'Your current role in Rotaract',
       type: 'radio',
@@ -114,12 +120,14 @@
   const el = (tag, attrs = {}, ...children) => {
     const node = document.createElement(tag);
     Object.entries(attrs).forEach(([k, v]) => {
-      if (k === 'class') node.className = v;
+      if (k === 'class') node.className = v || '';
       else if (k === 'for') node.htmlFor = v;
       else if (k.startsWith('on') && typeof v === 'function') node.addEventListener(k.substring(2), v);
+      else if (k === 'checked' || k === 'selected' || k === 'disabled' || k === 'multiple') { node[k] = !!v; }
+      else if (v === false || v == null) { /* skip */ }
       else node.setAttribute(k, v);
     });
-    for (const c of children) node.append(c.nodeType ? c : document.createTextNode(String(c)));
+    for (const c of children) if (c != null) node.append(c.nodeType ? c : document.createTextNode(String(c)));
     return node;
   };
 
@@ -152,12 +160,13 @@
     progressFill.style.width = percent + '%';
     btnSubmit.classList.toggle('hidden', state.index < QUESTIONS.length - 1);
     btnNext.classList.toggle('hidden', state.index >= QUESTIONS.length - 1);
+    btnBack.disabled = state.index === 0;
   }
 
   function renderNav() {
     navEl.innerHTML = '';
     QUESTIONS.forEach((q, i) => {
-      const completed = !!state.answers[q.id] && (Array.isArray(state.answers[q.id]) ? state.answers[q.id].length > 0 : true);
+      const completed = q.type === 'intro' ? state.index > 0 : (!!state.answers[q.id] && (Array.isArray(state.answers[q.id]) ? state.answers[q.id].length > 0 : true));
       const item = el('a', { href: '#', class: 'question-nav__item ' + (i === state.index ? 'question-nav__item--current ' : '') + (completed ? 'question-nav__item--completed' : ''), 'data-index': i, onclick: (e) => { e.preventDefault(); goTo(i); } },
         el('span', { class: 'question-nav__number' }, i + 1),
         el('div', { class: 'question-nav__text' }, q.title),
@@ -171,12 +180,16 @@
     const q = QUESTIONS[state.index];
     rootEl.innerHTML = '';
     const header = el('div', { class: 'question__header' },
-      el('h2', { class: 'question__title' }, q.title, q.required ? el('span', { class: 'question__required' }, '*') : '')
+      el('h2', { class: 'question__title' }, q.title, q.required ? el('span', { class: 'question__required' }, '*') : ''),
+      q.type === 'intro' ? el('p', { class: 'question__subtitle' }, q.description) : null
     );
     const optionsWrap = el('div', { class: 'question__options' });
 
     const current = state.answers[q.id];
-    if (q.type === 'radio') {
+    if (q.type === 'intro') {
+      const start = el('button', { class: 'btn btn--primary', onclick: (e) => { e.preventDefault(); goTo(1); } }, 'Start Survey');
+      optionsWrap.append(start);
+    } else if (q.type === 'radio') {
       q.options.forEach((opt, i) => {
         const id = `${q.id}_${i}`;
         optionsWrap.append(
@@ -187,10 +200,9 @@
         );
       });
     } else if (q.type === 'select') {
-      const select = el('select', { class: 'text-input', id: q.id, onchange: () => { state.answers[q.id] = select.value; saveToStorage(); updateProgress(); renderNav(); } },
-        el('option', { value: '' }, 'Select...'),
-        ...q.options.map(v => el('option', { value: v, selected: current === v }, v))
-      );
+      const select = el('select', { class: 'text-input', id: q.id, onchange: () => { state.answers[q.id] = select.value; saveToStorage(); updateProgress(); renderNav(); } });
+      select.append(el('option', { value: '' }, 'Select...'));
+      q.options.forEach(v => select.append(el('option', { value: v, selected: current === v }, v)));
       optionsWrap.append(select);
     } else if (q.type === 'checkbox') {
       const selected = Array.isArray(current) ? new Set(current) : new Set();
