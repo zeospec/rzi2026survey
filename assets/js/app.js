@@ -36,6 +36,7 @@
       id: 'challenges',
       title: 'What were your top 3 challenges in your term?',
       type: 'checkbox',
+      required: true,
       max: 3,
       options: [
         'Club reporting and documentation',
@@ -268,18 +269,18 @@
       optionsWrap.append(textarea);
     } else if (q.type === 'review') {
       const reviewItems = [
-        ['Name', state.answers.name || '-'],
-        ['Role', state.answers.role || '-'],
-        ['District', state.answers.district_number || '-'],
-        ['Challenges', Array.isArray(state.answers.challenges) ? state.answers.challenges.join(', ') : '-'],
-        ['Least Prepared', state.answers.least_prepared || '-'],
-        ['Training Needs', Array.isArray(state.answers.training_needs) ? state.answers.training_needs.join(', ') : '-'],
-        ['Session Format', Array.isArray(state.answers.session_format) ? state.answers.session_format.join(', ') : '-'],
-        ['Learning Experience', Array.isArray(state.answers.learning_experience) ? state.answers.learning_experience.join(', ') : '-'],
-        ['Problem Solving Booth', state.answers.problem_solving_booth || '-'],
-        ['Previous RZIs', state.answers.previous_rzis || '-'],
-        ['Willing to Speak', state.answers.willing_to_speak || '-'],
-        ['Additional Feedback', state.answers.feedback || '-']
+        [QUESTIONS.find(q => q.id === 'name').title, state.answers.name || '-'],
+        [QUESTIONS.find(q => q.id === 'role').title, state.answers.role || '-'],
+        [QUESTIONS.find(q => q.id === 'district_number').title, state.answers.district_number || '-'],
+        [QUESTIONS.find(q => q.id === 'challenges').title, Array.isArray(state.answers.challenges) ? state.answers.challenges.join(', ') : '-'],
+        [QUESTIONS.find(q => q.id === 'least_prepared').title, state.answers.least_prepared || '-'],
+        [QUESTIONS.find(q => q.id === 'training_needs').title, Array.isArray(state.answers.training_needs) ? state.answers.training_needs.join(', ') : '-'],
+        [QUESTIONS.find(q => q.id === 'session_format').title, Array.isArray(state.answers.session_format) ? state.answers.session_format.join(', ') : '-'],
+        [QUESTIONS.find(q => q.id === 'learning_experience').title, Array.isArray(state.answers.learning_experience) ? state.answers.learning_experience.join(', ') : '-'],
+        [QUESTIONS.find(q => q.id === 'problem_solving_booth').title, state.answers.problem_solving_booth || '-'],
+        [QUESTIONS.find(q => q.id === 'previous_rzis').title, state.answers.previous_rzis || '-'],
+        [QUESTIONS.find(q => q.id === 'willing_to_speak').title, state.answers.willing_to_speak || '-'],
+        [QUESTIONS.find(q => q.id === 'feedback').title, state.answers.feedback || '-']
       ];
       
       const reviewList = el('div', { class: 'review-list' });

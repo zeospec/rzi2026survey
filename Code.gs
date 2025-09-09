@@ -14,15 +14,15 @@ function doPost(e) {
         "Your Name",
         "Your current role in Rotaract",
         "Your District Number",
-        "Top 3 challenges in your term",
-        "Area DRRs are least prepared for",
-        "Focused learning sessions needed",
+        "What were your top 3 challenges in your term?",
+        "Which area do you feel DRRs are least prepared for at the start of their term?",
+        "Which of the following areas need focused learning sessions at RZI?",
         "Preferred session format at RZI",
-        "Valued learning experience at RZI",
-        "Value in a ‘Problem Solving Booth’",
-        "Previous RZIs attended",
-        "Willingness to be a panelist/speaker",
-        "Additional Feedback"
+        "What kind of learning experience would you value most at RZI?",
+        "Would you find value in a 'Problem Solving Booth' at RZI where experienced leaders guide on specific issues?",
+        "How many previous RZIs have you attended?",
+        "Would you be willing to be a panelist/speaker at RZI if invited?",
+        "Do you have additional feedback or suggestions for improving the RZI experience?"
       ]);
     }
 
