@@ -172,6 +172,7 @@
   const navElMobile = document.getElementById('questionNavMobile');
   const rootEl = document.getElementById('questionRoot');
   const progressFill = document.getElementById('progressFill');
+  const backgroundFill = document.getElementById('backgroundFill');
   const btnBack = document.getElementById('btnBack');
   const btnNext = document.getElementById('btnNext');
   const btnSubmit = document.getElementById('btnSubmit');
@@ -191,6 +192,12 @@
     const totalQuestions = QUESTIONS.filter(q => q.type !== 'intro' && q.type !== 'review').length;
     const percent = Math.round((completed / totalQuestions) * 100);
     progressFill.style.width = percent + '%';
+    
+    // Update background fill from bottom to top
+    if (backgroundFill) {
+      backgroundFill.style.height = percent + '%';
+    }
+    
     btnSubmit.classList.toggle('hidden', QUESTIONS[state.index].type !== 'review');
     btnNext.classList.toggle('hidden', QUESTIONS[state.index].type === 'review' || state.index >= QUESTIONS.length - 1);
     btnBack.disabled = state.index === 0;
