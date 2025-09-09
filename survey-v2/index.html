@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RZI 2026 Survey</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="icon" href="assets/images/favicon.svg" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="layout" id="app">
+    <aside class="sidebar" aria-label="Question list">
+      <div class="sidebar__content">
+        <h2 class="sidebar__title">Your Progress</h2>
+
+        <nav class="question-nav" id="questionNav" aria-label="Questions"></nav>
+      </div>
+    </aside>
+
+    <main class="main" id="main" tabindex="-1">
+      <header class="header" aria-label="Survey header">
+        <div class="header__progress">
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress-bar__fill" id="progressFill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="header__logos" aria-label="Partner logos">
+          <img src="assets/images/all-logos.svg" alt="Partner logos" class="header__logo" onerror="this.style.display='none'" />
+        </div>
+      </header>
+
+      <section class="main__content">
+        <div class="question-container">
+          <div class="question__logos">
+            <img src="assets/images/rzilogo.webp" alt="RZI Logo" class="question__logo question__logo--rzi" onerror="this.style.display='none'" />
+            <img src="assets/images/all-logos.svg" alt="Partner logos" class="question__logo question__logo--partners" onerror="this.style.display='none'" />
+          </div>
+
+          <article class="question" id="questionRoot" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer__content">
+          <button id="btnBack" class="btn btn--secondary" type="button" aria-label="Previous question">
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            Back
+          </button>
+
+          <div class="footer__spacer"></div>
+
+          <button id="btnSave" class="btn btn--secondary" type="button">Save</button>
+          <button id="btnNext" class="btn btn--primary" type="button" aria-label="Next question">
+            Next
+            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <button id="btnSubmit" class="btn btn--success hidden" type="button">Submit</button>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <div class="loading-overlay hidden" id="loadingOverlay" role="alert" aria-live="assertive">
+    <div class="loading-spinner" aria-hidden="true"></div>
+    <p class="loading-text">Saving your progress…</p>
+  </div>
+
+  <div class="modal hidden" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="modal__backdrop" data-close="modal"></div>
+    <div class="modal__content">
+      <div class="success-content">
+        <div class="success-logos">
+          <img src="assets/images/rzilogo.webp" alt="RZI Logo" class="success-logo success-logo--rzi" onerror="this.style.display='none'" />
+          <img src="assets/images/all-logos.svg" alt="Partner logos" class="success-logo success-logo--partners" onerror="this.style.display='none'" />
+        </div>
+
+        <svg class="success-icon" viewBox="0 0 52 52" aria-hidden="true">
+          <circle class="success-icon__circle" cx="26" cy="26" r="25" fill="none" />
+          <path class="success-icon__check" fill="none" d="M14 27 l7 7 l17 -17" />
+        </svg>
+
+        <h2 id="successTitle" class="success-title">Thank you!</h2>
+        <p class="success-message">Your responses have been submitted successfully.</p>
+        <div class="success-actions">
+          <button class="btn btn--secondary" data-close="modal" type="button">Close</button>
+          <a class="btn btn--primary" href="#" id="downloadJson" download="rzi-survey.json">Download responses</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
