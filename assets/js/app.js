@@ -16,21 +16,24 @@
       title: 'Your Name',
       type: 'text',
       required: true,
-      placeholder: 'Enter your full name'
+      placeholder: 'Enter your full name',
+      hint: 'Please enter your full name.'
     },
     {
       id: 'role',
       title: 'Your current role in Rotaract',
       type: 'radio',
       required: true,
-      options: ['Past DRR', 'Immediate Past DRR', 'DRR', 'DRR Elect', 'DRR Nominee']
+      options: ['Past DRR', 'Immediate Past DRR', 'DRR', 'DRR Elect', 'DRR Nominee'],
+      hint: 'Select your current role.'
     },
     {
       id: 'district_number',
       title: 'Your District Number',
       type: 'radio',
       required: true,
-      options: ['2981', '2982', '3000', '3011', '3012', '3020', '3030', '3040', '3053', '3055', '3056', '3060', '3070', '3080', '3090', '3100', '3110', '3120', '3131', '3132', '3141', '3142', '3150', '3160', '3170', '3181', '3182', '3191', '3192', '3203', '3204', '3205', '3206', '3211', '3212', '3220', '3231', '3233', '3234', '3240', '3250', '3261', '3262', '3292']
+      options: ['2981', '2982', '3000', '3011', '3012', '3020', '3030', '3040', '3053', '3055', '3056', '3060', '3070', '3080', '3090', '3100', '3110', '3120', '3131', '3132', '3141', '3142', '3150', '3160', '3170', '3181', '3182', '3191', '3192', '3203', '3204', '3205', '3206', '3211', '3212', '3220', '3231', '3233', '3234', '3240', '3250', '3261', '3262', '3292'],
+      hint: 'Select your district number from the list'
     },
     {
       id: 'challenges',
@@ -48,7 +51,8 @@
         'Fundraising and sponsorship',
         'Time management and delegation',
         'Lack of proper training before assuming role'
-      ]
+      ],
+      hint: 'Select up to 3 challenges that were most significant'
     },
     {
       id: 'least_prepared',
@@ -63,7 +67,8 @@
         'Membership & club health tracking',
         'Communication with clubs',
         'Branding and outreach'
-      ]
+      ],
+      hint: 'Select up to 3 areas where DRRs need the most preparation'
     },
     {
       id: 'training_needs',
@@ -82,7 +87,8 @@
         'Digital branding tools',
         'Planning RYLAs, Zonal Meets, District Events, Conferences',
         'How to handover effectively to your DRRE'
-      ]
+      ],
+      hint: 'Select up to 3 areas that would benefit most from focused learning'
     },
     {
       id: 'session_format',
@@ -96,7 +102,8 @@
         'Peer-led experience sharing',
         'Case studies / Success & failure stories',
         'Zone/region-wise breakout groups'
-      ]
+      ],
+      hint: 'Select up to 3 session formats you find most effective'
     },
     {
       id: 'learning_experience',
@@ -110,7 +117,8 @@
         'Interactive & activity-based learning',
         'Speaker-led expert sessions',
         'Networking & collaboration time'
-      ]
+      ],
+      hint: 'Select up to 3 learning experiences that would be most valuable'
     },
     {
       id: 'problem_solving_booth',
@@ -118,28 +126,32 @@
       type: 'checkbox',
       required: true,
       max: 3,
-      options: ['Yes, this would be highly valuable', 'Yes, but only for specific, complex issues', 'Maybe, depending on who is at the booth', 'No, I\'d prefer to network with peers']
+      options: ['Yes, this would be highly valuable', 'Yes, but only for specific, complex issues', 'Maybe, depending on who is at the booth', 'No, I\'d prefer to network with peers'],
+      hint: 'Select up to 3 responses that best reflect your opinion'
     },
     {
       id: 'previous_rzis',
       title: 'How many previous RZIs have you attended?',
       type: 'radio',
       required: true,
-      options: ['This will be my first','1','2','3 or more']
+      options: ['This will be my first','1','2','3 or more'],
+      hint: 'Select the option that best describes your RZI experience'
     },
     {
       id: 'willing_to_speak',
       title: 'Would you be willing to be a panelist/speaker at RZI if invited?',
       type: 'radio',
       required: true,
-      options: ['Yes', 'Maybe', 'No']
+      options: ['Yes', 'Maybe', 'No'],
+      hint: 'Select your willingness to share your experience with other leaders'
     },
     {
       id: 'feedback',
       title: 'Do you have additional feedback or suggestions for improving the RZI experience?',
       type: 'textarea',
       required: false,
-      placeholder: 'Share your thoughts and suggestions...'
+      placeholder: 'Share your thoughts and suggestions...',
+      hint: 'Optional: Share any additional insights or suggestions'
     },
     {
       id: 'review',
@@ -163,9 +175,86 @@
     return node;
   };
 
+  // Toast Notification System
+  function showToast(type, title, message, duration = 5000) {
+    const toast = el('div', { class: `toast toast--${type}` },
+      el('div', { class: `toast__icon toast__icon--${type}` }, getToastIcon(type)),
+      el('div', { class: 'toast__content' },
+        el('div', { class: 'toast__title' }, title),
+        el('div', { class: 'toast__message' }, message)
+      ),
+      el('button', { 
+        class: 'toast__close',
+        onclick: () => hideToast(toast)
+      }, 
+        el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2' },
+          el('path', { d: 'M18 6L6 18' }),
+          el('path', { d: 'M6 6l12 12' })
+        )
+      ),
+      el('div', { class: 'toast__progress' })
+    );
+
+    toastContainer.appendChild(toast);
+    
+    // Trigger animation
+    requestAnimationFrame(() => {
+      toast.classList.add('toast--show');
+    });
+
+    // Auto-hide after duration
+    if (duration > 0) {
+      const progressBar = toast.querySelector('.toast__progress');
+      progressBar.style.width = '100%';
+      progressBar.style.transitionDuration = `${duration}ms`;
+      
+      setTimeout(() => {
+        hideToast(toast);
+      }, duration);
+    }
+
+    return toast;
+  }
+
+  function hideToast(toast) {
+    toast.classList.remove('toast--show');
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }
+
+  function getToastIcon(type) {
+    const icons = {
+      error: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2' },
+        el('circle', { cx: '12', cy: '12', r: '10' }),
+        el('line', { x1: '15', y1: '9', x2: '9', y2: '15' }),
+        el('line', { x1: '9', y1: '9', x2: '15', y2: '15' })
+      ),
+      success: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2' },
+        el('path', { d: 'M22 11.08V12a10 10 0 1 1-5.93-9.14' }),
+        el('polyline', { points: '22,4 12,14.01 9,11.01' })
+      ),
+      warning: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2' },
+        el('path', { d: 'M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z' }),
+        el('line', { x1: '12', y1: '9', x2: '12', y2: '13' }),
+        el('line', { x1: '12', y1: '17', x2: '12.01', y2: '17' })
+      ),
+      info: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2' },
+        el('circle', { cx: '12', cy: '12', r: '10' }),
+        el('line', { x1: '12', y1: '16', x2: '12', y2: '12' }),
+        el('line', { x1: '12', y1: '8', x2: '12.01', y2: '8' })
+      )
+    };
+    return icons[type] || icons.info;
+  }
+
   const state = {
     index: 0,
     answers: loadFromStorage(),
+    isUserScrolling: false,
+    lastScrollTime: 0,
   };
 
   const navEl = document.getElementById('questionNav');
@@ -173,6 +262,7 @@
   const rootEl = document.getElementById('questionRoot');
   const progressFill = document.getElementById('progressFill');
   const backgroundFill = document.getElementById('backgroundFill');
+  const toastContainer = document.getElementById('toastContainer');
   const btnBack = document.getElementById('btnBack');
   const btnNext = document.getElementById('btnNext');
   const btnSubmit = document.getElementById('btnSubmit');
@@ -234,11 +324,29 @@
           inline: 'nearest'
         });
       } else {
-        // For mobile (horizontal layout)
-        currentItem.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'nearest',
-          inline: 'center'
+        // For mobile (horizontal layout) - only scroll navigation, not page
+        // Only scroll if user isn't actively scrolling
+        if (!state.isUserScrolling) {
+          currentItem.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'nearest',
+            inline: 'center'
+          });
+        }
+      }
+    }
+  }
+
+  function scrollMainContentToTop() {
+    // Only scroll main content to top on desktop screens
+    if (window.innerWidth > 900) {
+      const mainElement = document.querySelector('.main');
+      
+      // Scroll the main element to top if it's scrollable
+      if (mainElement && mainElement.scrollTop > 10) {
+        mainElement.scrollTo({
+          top: 0,
+          behavior: 'smooth'
         });
       }
     }
@@ -249,7 +357,8 @@
     rootEl.innerHTML = '';
     const header = el('div', { class: 'question__header' },
       el('h2', { class: 'question__title' }, q.title, q.required ? el('span', { class: 'question__required' }, '*') : ''),
-      q.type === 'intro' ? el('p', { class: 'question__subtitle' }, q.description) : null
+      q.type === 'intro' ? el('p', { class: 'question__subtitle' }, q.description) : null,
+      q.hint ? el('p', { class: 'question__hint' }, q.hint) : null
     );
     const optionsWrap = el('div', { class: 'question__options' });
 
@@ -329,7 +438,7 @@
           if (checkbox.checked) {
             if (q.max && selected.size >= q.max) {
               checkbox.checked = false; // revert
-              alert(`Please select up to ${q.max} options.`);
+              showToast('warning', 'Selection Limit', `Please select up to ${q.max} options.`);
               return;
             }
             selected.add(opt);
@@ -360,10 +469,11 @@
     renderNav();
     updateProgress();
     
-    // Only scroll to current question when actually navigating between questions
+    // Scroll main content to top on desktop, and navigation on mobile
     setTimeout(() => {
       scrollToCurrentQuestion();
-    }, 100);
+      scrollMainContentToTop();
+    }, window.innerWidth > 900 ? 100 : 200); // Longer delay on mobile to avoid interference
   }
 
   function next() {
@@ -379,7 +489,7 @@
     const q = QUESTIONS[state.index];
     const v = state.answers[q.id];
     if (q.required && (v == null || v === '' || (Array.isArray(v) && v.length === 0))) {
-      alert('Please answer the required question to continue.');
+      showToast('error', 'Required Question', 'Please answer the required question to continue.');
       return false;
     }
     return true;
@@ -397,7 +507,7 @@
       const v = state.answers[q.id];
       if (q.required && (v == null || v === '' || (Array.isArray(v) && v.length === 0))) {
         goTo(i);
-        alert('Please answer all required questions.');
+        showToast('error', 'Incomplete Survey', 'Please answer all required questions before submitting.');
         return;
       }
     }
@@ -439,8 +549,13 @@
   }
 
   function showSuccess() {
-    // Show success modal
-    openModal();
+    // Show success toast
+    showToast('success', 'Survey Submitted!', 'Thank you for your responses. Your feedback has been recorded successfully.', 3000);
+    
+    // Show success modal after a short delay
+    setTimeout(() => {
+      openModal();
+    }, 1000);
     
     // Clear stored data after successful submission
     localStorage.removeItem('rzi_survey_answers');
@@ -484,6 +599,21 @@
       scrollToCurrentQuestion();
     }, 100);
   });
+
+  // Track user scrolling to prevent auto-scroll interference
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    state.isUserScrolling = true;
+    state.lastScrollTime = Date.now();
+    
+    // Clear existing timeout
+    clearTimeout(scrollTimeout);
+    
+    // Reset user scrolling flag after user stops scrolling
+    scrollTimeout = setTimeout(() => {
+      state.isUserScrolling = false;
+    }, 150);
+  }, { passive: true });
 
   // Init
   renderNav();
