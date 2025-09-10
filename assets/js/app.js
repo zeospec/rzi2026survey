@@ -417,7 +417,10 @@
       reviewItems.forEach(([key, value]) => {
         const item = el('div', { class: 'review-item' },
           el('strong', { class: 'review-key' }, key + ': '),
-          el('span', { class: 'review-value' }, value)
+          // Special handling for textarea content (feedback) to preserve line breaks
+          key === QUESTIONS.find(q => q.id === 'feedback').title 
+            ? el('div', { class: 'review-value review-value--textarea' }, value)
+            : el('span', { class: 'review-value' }, value)
         );
         reviewList.append(item);
       });
@@ -558,13 +561,13 @@
   }
 
   function showSuccess() {
-    // Show success toast
-    showToast('success', 'Survey Submitted!', 'Thank you for your responses. Your feedback has been recorded successfully.', 3000);
+    // Show success modal immediately for faster loading
+    openModal();
     
-    // Show success modal after a short delay
+    // Show success toast after modal is shown
     setTimeout(() => {
-      openModal();
-    }, 1000);
+      showToast('success', 'Survey Submitted!', 'Thank you for your responses. Your feedback has been recorded successfully.', 3000);
+    }, 200);
     
     // Clear stored data after successful submission
     localStorage.removeItem('rzi_survey_answers');
