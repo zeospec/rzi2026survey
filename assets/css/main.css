@@ -217,7 +217,7 @@ body::before {
 .header {
   display: flex; 
   align-items: center; 
-  gap: 24px;
+  gap: 16px;
   background: var(--color-dark-surface);
   border: 1px solid var(--color-dark-surface-light); 
   border-radius: var(--radius-2xl);
@@ -227,9 +227,9 @@ body::before {
   position: relative;
   overflow: hidden;
   /* Ensure consistent header dimensions */
-  height: 80px;
-  min-height: 80px;
-  max-height: 80px;
+  height: 84px;
+  min-height: 84px;
+  max-height: 84px;
   flex-shrink: 0;
   box-sizing: border-box;
 }
@@ -251,6 +251,9 @@ body::before {
 }
 
 .header__progress { flex: 1; }
+/* Split header evenly between progress and logos */
+.header__progress { flex-basis: 50%; max-width: 50%; }
+.header__logos { flex-basis: 50%; max-width: 50%; display: flex; justify-content: flex-end; align-items: center; }
 .progress-bar { 
   width: 100%; 
   height: 12px; 
@@ -270,8 +273,12 @@ body::before {
 
 .header__logo { 
   height: 48px; 
+  max-width: 480px;
+  width: 100%;
   filter: brightness(1.1);
   transition: all var(--t-normal);
+  object-fit: contain;
+  display: block;
 }
 
 .header__logo:hover {
@@ -806,8 +813,15 @@ a.btn--cta:hover {
   gap: 20px; 
 }
 
+.success-logo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .success-logo--rzi { 
-  height: 140px; 
+  max-height: 140px; 
   filter: brightness(1.1);
   transition: all var(--t-normal);
 }
@@ -818,7 +832,8 @@ a.btn--cta:hover {
 }
 
 .success-logo--partners { 
-  height: 70px; 
+  max-width: 100%;
+  height: auto;
   filter: brightness(1.1);
   transition: all var(--t-normal);
 }
@@ -1114,6 +1129,9 @@ a.btn--cta:hover {
   .sidebar { width: 260px; }
   .question__logo--rzi { height: 140px; }
   .question__logo--partners { height: 64px; }
+  /* Tablets: keep an even split between progress and logos */
+  .header__progress { flex-basis: 50%; max-width: 50%; }
+  .header__logos { flex-basis: 50%; max-width: 50%; }
 }
 
 /* Large mobile and small tablets */
@@ -1152,6 +1170,9 @@ a.btn--cta:hover {
   .header {
     padding: 20px 24px;
   }
+  /* Use 70% for logos and 30% for progress on small tablets/large mobiles */
+  .header__progress { flex-basis: 30%; max-width: 30%; }
+  .header__logos { flex-basis: 70%; max-width: 70%; justify-content: flex-end; }
   .sidebar__title { 
     display: none; 
   }
@@ -1263,8 +1284,11 @@ a.btn--cta:hover {
   .question__logo--rzi { height: 100px; }
   .question__logo--partners { height: 48px; }
   .header__progress { flex: 1; }
+  /* Tablets (≤768px): enforce 50/50 split */
+  .header__progress { flex-basis: 50%; max-width: 50%; }
+  .header__logos { flex-basis: 50%; max-width: 50%; }
   .progress-bar { width: 100%; }
-  .header__logo { height: 36px; }
+  .header__logo { height: 34px; width: 100%; max-width: 340px; }
   .header { padding: 18px 20px; }
   .main { 
     gap: 12px; 
@@ -1325,10 +1349,11 @@ a.btn--cta:hover {
     font-size: 24px;
   }
   .success-logo--rzi {
-    height: 120px;
+    max-height: 120px;
   }
   .success-logo--partners {
-    height: 60px;
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -1336,6 +1361,9 @@ a.btn--cta:hover {
 @media (max-width: 520px) {
   .layout { padding: 8px; gap: 8px; }
   .header { padding: 12px 14px; }
+  /* On mobile portrait, give logos 70% of header width */
+  .header__progress { flex-basis: 30%; max-width: 30%; }
+  .header__logos { flex-basis: 70%; max-width: 70%; justify-content: flex-end; }
   .footer { padding: 12px 14px; }
   .main { 
     gap: 8px; 
@@ -1346,7 +1374,7 @@ a.btn--cta:hover {
   .question__title { font-size: 20px; line-height: 1.4; }
   .question__logo--rzi { height: 80px; }
   .question__logo--partners { height: 40px; }
-  .header__logo { height: 32px; }
+  .header__logo { height: 32px; width: 100%; max-width: 300px; }
   .header__progress { flex: 1; }
   .progress-bar { width: 100%; }
   .btn { padding: 10px 14px; font-size: 14px; }
@@ -1405,6 +1433,9 @@ a.btn--cta:hover {
     max-height: none; 
     overflow-y: visible; 
   }
+  /* Very small phones: emphasize logos more */
+  .header__progress { flex-basis: 20%; max-width: 20%; }
+  .header__logos { flex-basis: 80%; max-width: 80%; }
   .question-container { padding: 12px; }
   .question__title { font-size: 18px; line-height: 1.4; }
   .question__logo--rzi { height: 70px; }
@@ -1464,10 +1495,11 @@ a.btn--cta:hover {
     margin: 16px; 
   }
   .success-logo--rzi { 
-    height: 100px; 
+    max-height: 100px; 
   }
   .success-logo--partners { 
-    height: 50px; 
+    max-width: 100%;
+    height: auto; 
   }
   .success-title { 
     font-size: 22px; 
