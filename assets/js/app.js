@@ -24,7 +24,7 @@
       title: 'Your current role in Rotaract',
       type: 'radio',
       required: true,
-      options: ['Past DRR', 'Immediate Past DRR', 'DRR', 'DRR Elect', 'DRR Nominee'],
+      options: ['Past DRR', 'Immediate Past DRR', 'DRR', 'DRR Elect', 'DRR Nominee', 'Other'],
       hint: 'Select your current role.'
     },
     {
@@ -32,7 +32,7 @@
       title: 'Your District Number',
       type: 'radio',
       required: true,
-      options: ['2981', '2982', '3000', '3011', '3012', '3020', '3030', '3040', '3053', '3055', '3056', '3060', '3070', '3080', '3090', '3100', '3110', '3120', '3131', '3132', '3141', '3142', '3150', '3160', '3170', '3181', '3182', '3191', '3192', '3203', '3204', '3205', '3206', '3211', '3212', '3220', '3231', '3233', '3234', '3240', '3250', '3261', '3262', '3292'],
+      options: ['2981', '2982', '3000', '3011', '3012', '3020', '3030', '3040', '3053', '3055', '3056', '3060', '3070', '3080', '3090', '3100', '3110', '3120', '3131', '3132', '3141', '3142', '3150', '3160', '3170', '3181', '3182', '3191', '3192', '3203', '3204', '3205', '3206', '3211', '3212', '3220', '3231', '3233', '3234', '3240', '3250', '3261', '3262', '3292', 'Other'],
       hint: 'Select your district number from the list'
     },
     {
@@ -309,6 +309,12 @@
   function renderNav() {
     if (navEl) buildNavInto(navEl);
     if (navElMobile) buildNavInto(navElMobile);
+    
+    // Ensure mobile navigation is visible on mobile screens
+    if (window.innerWidth <= 900 && navElMobile) {
+      navElMobile.style.display = 'flex';
+    }
+    
     // Don't auto-scroll during option selection, only during navigation
   }
 
@@ -343,7 +349,7 @@
       const mainElement = document.querySelector('.main');
       
       // Scroll the main element to top if it's scrollable
-      if (mainElement && mainElement.scrollTop > 10) {
+      if (mainElement && mainElement.scrollTop > 0) {
         mainElement.scrollTo({
           top: 0,
           behavior: 'smooth'
@@ -355,10 +361,13 @@
   function renderQuestion() {
     const q = QUESTIONS[state.index];
     rootEl.innerHTML = '';
+    
+    // Create consistent header structure for all questions
     const header = el('div', { class: 'question__header' },
       el('h2', { class: 'question__title' }, q.title, q.required ? el('span', { class: 'question__required' }, '*') : ''),
-      q.type === 'intro' ? el('p', { class: 'question__subtitle' }, q.description) : null,
-      q.hint ? el('p', { class: 'question__hint' }, q.hint) : null
+      // Always create both subtitle and hint elements, but conditionally populate them
+      el('p', { class: 'question__subtitle' }, q.type === 'intro' ? q.description : ''),
+      el('p', { class: 'question__hint' }, q.hint ? q.hint : '')
     );
     const optionsWrap = el('div', { class: 'question__options' });
 
@@ -597,6 +606,13 @@
   window.addEventListener('resize', () => {
     setTimeout(() => {
       scrollToCurrentQuestion();
+      
+      // Ensure proper mobile navigation visibility
+      if (window.innerWidth <= 900 && navElMobile) {
+        navElMobile.style.display = 'flex';
+      } else if (window.innerWidth > 900 && navElMobile) {
+        navElMobile.style.display = 'none';
+      }
     }, 100);
   });
 
@@ -619,4 +635,11 @@
   renderNav();
   renderQuestion();
   updateProgress();
+  
+  // Ensure proper initial mobile navigation visibility
+  if (window.innerWidth <= 900 && navElMobile) {
+    navElMobile.style.display = 'flex';
+  } else if (window.innerWidth > 900 && navElMobile) {
+    navElMobile.style.display = 'none';
+  }
 })();
